@@ -33,18 +33,17 @@ add_subdirectory(src)
 # We are using a module offered by CMake here
 include(FetchContent)
 ## 2 subfunctions are required
-# This will declare - get the required files from the GitHub Repo, the parameters
-are:
+# This will declare - get the required files from the GitHub Repo, the parametersare:
 # 1. Project name as present in GitHub repo CMakeLists.txt
 # 2. GIT_REPOSITORY <link_of_repo> - The repo that we want to copy
 # 3. GIT_TAG <release_tag> - This will get the particular tag/version/revision that is mentioned here
 # 4. GIT_SHALLOW - To prevent recursive cloning of the repo
 FetchContent_Declare(
-    fmt
-    GIT_REPOSITORY "https://github.com/fmtlib/fmt"
-    GIT_TAG 9.1.0
+    assimp
+    GIT_REPOSITORY "https://github.com/assimp/assimp"
+    GIT_TAG v5.3.1
     GIT_SHALLOW TRUE
 )
 # This will make sure that the external library is available to use with the app, the parameters are:
 # 1. Project name as mentioned in FetchContent_Declare (1st parameter)
-FetchContent_MakeAvailable(fmt)
+FetchContent_MakeAvailable(assimp)

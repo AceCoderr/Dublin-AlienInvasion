@@ -27,5 +27,5 @@ ${LIBRARY_INCLUDES}
 # We use project_name::library_name (Both can be found in the CMakeLists.txt for the library)
 target_link_libraries(
     ${LIBRARY_NAME} PUBLIC
-    fmt::fmt
+    assimp::assimp
 )
