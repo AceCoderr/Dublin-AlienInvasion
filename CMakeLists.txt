@@ -2,7 +2,7 @@
 ## You cannot skip this command
 # The file with this command must be present in the
 # root directory for the project
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.24)
 ## You can make comments using # just like we do in Python ##
 ## Defining the project settings, the parameters are in the following sequence
 # Name of the projects
@@ -24,11 +24,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Setting the Executable and Library Name
 set(EXECUTABLE_NAME Executable)
 set(LIBRARY_NAME Library)
+set(EXTERN_LIBRARY_NAME Library_External)
 # Since src (Application) is dependent on include (Custom Libraries)
 # We include them in a reverse order, otherwise
 # The application will throw an error while building
-add_subdirectory(include)
-add_subdirectory(src)
+
 # Adding external libraries
 # We are using a module offered by CMake here
 include(FetchContent)
@@ -39,6 +39,28 @@ include(FetchContent)
 # 3. GIT_TAG <release_tag> - This will get the particular tag/version/revision that is mentioned here
 # 4. GIT_SHALLOW - To prevent recursive cloning of the repo
 FetchContent_Declare(
+    Vulkan-Headers
+    GIT_REPOSITORY "https://github.com/KhronosGroup/Vulkan-Headers"
+    GIT_TAG v1.3.204
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(Vulkan-Headers)
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY "https://github.com/g-truc/glm"
+    GIT_TAG 0.9.9.8
+    GIT_SHALLOW TRUE
+)
+
+FetchContent_MakeAvailable(glm)
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY "https://github.com/glfw/glfw"
+    GIT_TAG 3.3.9
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(glfw)
+FetchContent_Declare(
     assimp
     GIT_REPOSITORY "https://github.com/assimp/assimp"
     GIT_TAG v5.3.1
@@ -46,4 +68,9 @@ FetchContent_Declare(
 )
 # This will make sure that the external library is available to use with the app, the parameters are:
 # 1. Project name as mentioned in FetchContent_Declare (1st parameter)
+add_subdirectory(extern)
 FetchContent_MakeAvailable(assimp)
+add_subdirectory(include)
+add_subdirectory(src)
+configure_file(configuration/root_directory.h.in configuration/root_directory.h)
+include_directories(${CMAKE_BINARY_DIR}/configuration)
