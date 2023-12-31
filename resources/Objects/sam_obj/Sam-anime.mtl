@@ -1,0 +1,52 @@
+# MTL written from /Volumes/Amy/3D Sphere/modo projects/sam_lux/Sam-anime.obj
+newmtl Cornia
+Kd 1 1 1
+Ns 256
+d 0
+illum 2
+Ka 0 0 0
+Ks 1 1 1
+newmtl Nails
+Kd 0.6 0.6 0.6
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.59 0.59 0.59
+map_Kd /Volumes/Amy/3D Sphere/modo projects/sam_lux/samtext27.jpg
+map_Bump /Volumes/Amy/3D Sphere/modo projects/sam_lux/sambump.jpg
+newmtl Skin
+Kd 0.6 0.6 0.6
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.15 0.15 0.15
+map_Kd /Volumes/Amy/3D Sphere/modo projects/sam_lux/samtext27.jpg
+map_Bump /Volumes/Amy/3D Sphere/modo projects/sam_lux/sambump.jpg
+newmtl Tongue
+Kd 0.6 0.6 0.6
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.615 0.615 0.615
+map_Kd /Volumes/Amy/3D Sphere/modo projects/sam_lux/samtext27.jpg
+map_Bump /Volumes/Amy/3D Sphere/modo projects/sam_lux/sambump.jpg
+newmtl eyeball
+Kd 0.784314 0.784314 0.784314
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+map_Kd /Volumes/Amy/3D Sphere/modo projects/sam_lux/eyeball_Yellow.jpg
+newmtl teeth
+Kd 0.6 0.6 0.6
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.575 0.575 0.575
+map_Kd /Volumes/Amy/3D Sphere/modo projects/sam_lux/samtext27.jpg
+map_Bump /Volumes/Amy/3D Sphere/modo projects/sam_lux/sambump.jpg

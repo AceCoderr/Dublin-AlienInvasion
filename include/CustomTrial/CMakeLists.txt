@@ -8,6 +8,13 @@ LIBRARY_HEADERS
 "shader_m.h"
 "Camera.h"
 "filesystem.h"
+"model.h"
+"mesh.h"
+"animation.h"
+"animator.h"
+"animdata.h"
+"assimp_glm_helpers.h"
+"bone.h"
 )
 set(
 LIBRARY_INCLUDES
