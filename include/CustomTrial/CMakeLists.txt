@@ -1,6 +1,10 @@
 set(
 LIBRARY_SOURCES
 "helloworld.cpp"
+"ParticleSystem.cpp"
+"Helper.cpp"
+"Particle.cpp"
+"Renderer.cpp"
 )
 set(
 LIBRARY_HEADERS
@@ -15,6 +19,10 @@ LIBRARY_HEADERS
 "animdata.h"
 "assimp_glm_helpers.h"
 "bone.h"
+"Helper.h"
+"Particle.h"
+"ParticleSystem.h"
+"Renderer.h"
 )
 set(
 LIBRARY_INCLUDES

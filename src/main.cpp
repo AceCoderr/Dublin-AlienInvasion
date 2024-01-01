@@ -1,6 +1,5 @@
 #include <glad.h>
 #include <GLFW/glfw3.h>
-#include <stb_image.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -11,18 +10,18 @@
 #include <animator.h>
 #include "model.h"
 #include <iostream>
+#include "Renderer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
-unsigned int loadTexture(const char *path);
 void LoadCity(float deltaTime,Shader ModelShader,Model ourModel,glm::vec3 pointLightPositions[]);
 void LoadSkybox(Shader skyboxShader,unsigned int skyboxVAO,unsigned int cubemapTexture);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1900;
+const unsigned int SCR_HEIGHT = 1050;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -78,14 +77,23 @@ int main()
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
+     glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Enables Cull Facing
 	glEnable(GL_CULL_FACE);
 	// Keeps front faces
 	glCullFace(GL_FRONT);
 	// Uses counter clock-wise standard
 	glFrontFace(GL_CCW);
+	glEnable(GL_TEXTURE_2D);
+	glClearColor(0.1, 0.1, 0.1, 1);
 
     stbi_set_flip_vertically_on_load(true);
+
+    Renderer renderer;
+	ParticleSystem *particleSystem = new ParticleSystem;
+	renderer.particleSystem = particleSystem;
+    renderer.setShaders();
     // build and compile our shader zprogram
     // ------------------------------------
     //Shader ModelShader("6.multiple_lights.vs", "6.multiple_lights.fs");
@@ -243,6 +251,7 @@ for (unsigned int i = 0; i < 6; i++)
 
     while (!glfwWindowShouldClose(window))
     {
+
         //per-frame time logic
         //--------------------
         float currentFrame = glfwGetTime();
@@ -306,7 +315,9 @@ for (unsigned int i = 0; i < 6; i++)
 		AnimShader.setMat4("model", Animmodel);
 		AlienModel.Draw(AnimShader);
 
+        renderer.renderParticles();
         glfwSwapBuffers(window);
+	    particleSystem->update();
         glfwPollEvents();
     }
 
@@ -372,43 +383,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-// utility function for loading a 2D texture from file
-// ---------------------------------------------------
-unsigned int loadTexture(char const * path)
-{
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-
-    int width, height, nrComponents;
-    unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
-    if (data)
-    {
-        GLenum format;
-        if (nrComponents == 1)
-            format = GL_RED;
-        else if (nrComponents == 3)
-            format = GL_RGB;
-        else if (nrComponents == 4)
-            format = GL_RGBA;
-
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        stbi_image_free(data);
-    }
-    else
-    {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
-    }
-    return textureID;
-}
 
 void LoadCity(float deltaTime,Shader ModelShader,Model ourModel,glm::vec3 pointLightPositions[]){
 
